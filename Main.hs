@@ -1,8 +1,12 @@
+module Main where
+
 import qualified Data.Text as T
 import qualified ID3.Simple as S
 import qualified System.Process as P
 
-main = interact tagger
+main = do
+  str <- getContents
+  tagger str
 
 -- returns filename and extension
 splitFilename :: String -> [String]
