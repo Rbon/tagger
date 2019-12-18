@@ -1,0 +1,156 @@
+
+package: MissingH-1.4.2.0
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+flags: network--ge-3_0_0
+dependencies: array-0.5.2.0 base-4.11.1.0 containers-0.5.11.0
+              directory-1.3.1.5 filepath-1.4.2 hslogger-1.3.1.0 mtl-2.2.2
+              network-3.1.1.1 network-bsd-2.8.1.0 old-locale-1.0.0.7
+              old-time-1.1.0.3 parsec-3.1.13.0 process-1.6.3.0 random-1.1
+              regex-compat-0.95.2.0 time-1.8.0.2 unix-2.7.2.2
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: data-accessor-0.2.3
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+flags: category -monadfail splitbase
+dependencies: array-0.5.2.0 base-4.11.1.0 containers-0.5.11.0
+              transformers-0.5.5.0
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: hslogger-1.3.1.0
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+flags: network--gt-3_0_0
+dependencies: base-4.11.1.0 bytestring-0.10.8.2 containers-0.5.11.0
+              deepseq-1.4.3.0 network-3.1.1.1 network-bsd-2.8.1.0
+              old-locale-1.0.0.7 time-1.8.0.2 unix-2.7.2.2
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: idiii-0.1.3.3
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: MissingH-1.4.2.0 base-4.11.1.0 bytestring-0.10.8.2
+              containers-0.5.11.0 data-accessor-0.2.3 polyparse-1.13 text-1.2.3.1
+              utf8-string-1.0.1.1 base-4.11.1.0 containers-0.5.11.0
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: network-3.1.1.1
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0 bytestring-0.10.8.2 deepseq-1.4.3.0
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: network-bsd-2.8.1.0
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0 deepseq-1.4.3.0 network-3.1.1.1
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: old-locale-1.0.0.7
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: old-time-1.1.0.3
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0 old-locale-1.0.0.7
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: polyparse-1.13
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0 bytestring-0.10.8.2 text-1.2.3.1
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: random-1.1
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0 time-1.8.0.2
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: regex-base-0.94.0.0
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: array-0.5.2.0 base-4.11.1.0 bytestring-0.10.8.2
+              containers-0.5.11.0 mtl-2.2.2 text-1.2.3.1
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: regex-compat-0.95.2.0
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: array-0.5.2.0 base-4.11.1.0 regex-base-0.94.0.0
+              regex-posix-0.96.0.0
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: regex-posix-0.96.0.0
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+flags: -_regex-posix-clib
+dependencies: array-0.5.2.0 base-4.11.1.0 bytestring-0.10.8.2
+              containers-0.5.11.0 regex-base-0.94.0.0
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
+
+package: utf8-string-1.0.1.1
+os: linux
+arch: aarch64
+compiler: ghc-8.4.4
+client: cabal-install-2.2.0.0
+dependencies: base-4.11.1.0 bytestring-0.10.8.2
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
