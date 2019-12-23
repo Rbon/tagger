@@ -6,26 +6,33 @@ import qualified Data.Text as T
 import qualified ID3.Simple as S
 import qualified System.Process as P
 
-main = getArgs >>= parseArgs >>= putStrLn
+main = getArgs >>= parseArgs
 
-parseArgs :: [String] -> IO String
-parseArgs ["-h"] = usage >> exit
-parseArgs []     = getContents
-parseArgs files  = tagger files
+parseArgs files = mapM tagger files
 
-usage = putStrLn "Usage: tagger [-h] [file ..]"
+usage = "Usage: tagger [-h] [file ..]"
 exit  = exitWith ExitSuccess
 
--- returns filename and extension
-splitFilename :: String -> [String]
-splitFilename str = map T.unpack $ T.splitOn (T.pack ".") (T.pack str)
+parseTrackNum :: String -> [String]
+parseTrackNum str = map T.unpack $ T.splitOn (T.pack " - ") (T.pack str)
 
-tagger :: [[Char]] -> IO a
-tagger (str:strs) = do
-  let fileInfo = splitFilename str
-  let fileName = fileInfo !! 0
-  let fileExt = fileInfo !! 1
-  P.system $ "id3v2 -t " ++ fileName ++ " " ++ str
-  tagger strs
-tagger _ = exit
+parseTitle :: String -> [String]
+parseTitle str = map T.unpack $ T.splitOn (T.pack ".") (T.pack str)
+
+-- this is poor form
+parseTags :: String -> [String]
+parseTags fileName = do
+  let tokens = parseTrackNum fileName
+  let track = tokens !! 0
+  let str = tokens !! 1
+  let tokens = parseTitle str
+  let title = tokens !! 0
+  let ext = tokens !! 1
+  [fileName, track, title, ext]
+
+id3v2Tagger (fileName:track:title:ext) = do
+  P.system $ "id3v2 -T '" ++ track ++ "' " ++ "'" ++ fileName ++ "'"
+  P.system $ "id3v2 -t '" ++ title ++ "' " ++ "'" ++ fileName ++ "'"
+
+tagger = id3v2Tagger . parseTags
 
