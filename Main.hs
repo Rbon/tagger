@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main where
 
 import System.Environment
@@ -6,33 +8,35 @@ import qualified Data.Text as T
 import qualified ID3.Simple as S
 import qualified System.Process as P
 
-main = getArgs >>= parseArgs
+main = do
+  args <- getArgs
+  let files = map tagger args
+  let commands = concatMap extractCommand files
+  mapM P.system commands
 
-parseArgs files = mapM tagger files
+tagger fileName = (titleP fileName . trackNumP fileName) (fileName, [])
+
+extractCommand (_, xs) = xs
 
 usage = "Usage: tagger [-h] [file ..]"
 exit  = exitWith ExitSuccess
 
-parseTrackNum :: String -> [String]
-parseTrackNum str = map T.unpack $ T.splitOn (T.pack " - ") (T.pack str)
+unText :: (T.Text -> T.Text) -> String -> String
+unText f = T.unpack . f . T.pack
 
-parseTitle :: String -> [String]
-parseTitle str = map T.unpack $ T.splitOn (T.pack ".") (T.pack str)
+tagParser :: String -> String -> String -> (String, [String]) -> (String, [String])
+tagParser delim frame fileName (str, commands) = (rest, command:commands)
+    where (content, rest) = splitFileName delim str
+          command = id3v2Tagger frame content fileName
 
--- this is poor form
-parseTags :: String -> [String]
-parseTags fileName = do
-  let tokens = parseTrackNum fileName
-  let track = tokens !! 0
-  let str = tokens !! 1
-  let tokens = parseTitle str
-  let title = tokens !! 0
-  let ext = tokens !! 1
-  [fileName, track, title, ext]
+trackNumP = tagParser " - " "-T"
+titleP = tagParser "." "-t"
 
-id3v2Tagger (fileName:track:title:ext) = do
-  P.system $ "id3v2 -T '" ++ track ++ "' " ++ "'" ++ fileName ++ "'"
-  P.system $ "id3v2 -t '" ++ title ++ "' " ++ "'" ++ fileName ++ "'"
+splitFileName delim str
+  | length split == 1 = ("", concat split)
+  | otherwise         = (split !! 0, split !! 1)
+    where split = map T.unpack $ T.splitOn (T.pack delim) (T.pack str)
 
-tagger = id3v2Tagger . parseTags
-
+id3v2Tagger :: String -> String -> String -> String
+id3v2Tagger frame content fileName =
+  "id3v2 " ++ frame ++ " '" ++ content ++ "' " ++ "'" ++ fileName ++ "'"
