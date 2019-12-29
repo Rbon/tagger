@@ -1,7 +1,0 @@
-cabal: Entering directory '/tmp/cabal-tmp-11527/regex-compat-0.95.2.0'
-Configuring regex-compat-0.95.2.0...
-Preprocessing library for regex-compat-0.95.2.0..
-Building library for regex-compat-0.95.2.0..
-[1 of 1] Compiling Text.Regex       ( Text/Regex.hs, dist/dist-sandbox-e90b19aa/build/Text/Regex.o )
-Installing library in /home/godofluigi/projects/tagger/.cabal-sandbox/lib/aarch64-linux-ghc-8.4.4/regex-compat-0.95.2.0-57nqQNWnPpe6UQuADvv9NR
-cabal: Leaving directory '/tmp/cabal-tmp-11527/regex-compat-0.95.2.0'

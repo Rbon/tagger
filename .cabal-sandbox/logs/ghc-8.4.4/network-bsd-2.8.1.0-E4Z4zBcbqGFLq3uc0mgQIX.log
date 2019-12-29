@@ -1,7 +1,0 @@
-cabal: Entering directory '/tmp/cabal-tmp-11528/network-bsd-2.8.1.0'
-Configuring network-bsd-2.8.1.0...
-Preprocessing library for network-bsd-2.8.1.0..
-Building library for network-bsd-2.8.1.0..
-[1 of 1] Compiling Network.BSD      ( dist/dist-sandbox-e90b19aa/build/Network/BSD.hs, dist/dist-sandbox-e90b19aa/build/Network/BSD.o )
-Installing library in /home/godofluigi/projects/tagger/.cabal-sandbox/lib/aarch64-linux-ghc-8.4.4/network-bsd-2.8.1.0-E4Z4zBcbqGFLq3uc0mgQIX
-cabal: Leaving directory '/tmp/cabal-tmp-11528/network-bsd-2.8.1.0'
