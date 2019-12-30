@@ -24,7 +24,9 @@ writer x = do
   trackNumWriter (trackNum x) (fileName x)
   titleWriter (title x) (fileName x)
 
-tagWriter info = S.writeTag (fileName info) (tagMaker info)
+tagWriter info = do
+  putStrLn $ "writing tags for: " ++ (fileName info)
+  S.writeTag (fileName info) (tagMaker info)
 
 tagMaker :: FileInfo -> I.ID3Tag
 tagMaker info = S.setTrack (trackNum info) $ S.setTitle (title info) I.emptyID3Tag
