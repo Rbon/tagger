@@ -4,6 +4,7 @@ module Tagger where
 
 import System.Exit
 import qualified Data.Text as T
+import qualified ID3 as I
 import qualified ID3.Simple as S
 import qualified System.Process as P
 
@@ -17,11 +18,16 @@ fileInfo x = FileInfo { fileName = x, trackNum = y, title = z }
   where (y, rest) = splitFileName " - " x
         (z, _) = splitFileName "." rest
 
-tagger = writer . fileInfo
+tagger = tagWriter . fileInfo
 
 writer x = do
   trackNumWriter (trackNum x) (fileName x)
   titleWriter (title x) (fileName x)
+
+tagWriter info = S.writeTag (fileName info) (tagMaker info)
+
+tagMaker :: FileInfo -> I.ID3Tag
+tagMaker info = S.setTrack (trackNum info) $ S.setTitle (title info) I.emptyID3Tag
 
 usage = "Usage: tagger [-h] [file ..]"
 exit  = exitWith ExitSuccess
@@ -41,3 +47,4 @@ trackNumWriter = id3v2Tagger "-T"
 
 titleWriter :: String -> String -> IO ExitCode
 titleWriter = id3v2Tagger "-t"
+
