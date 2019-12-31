@@ -13,21 +13,28 @@ data FileInfo = FileInfo { fileName :: String
                          , title :: String
                          } deriving (Show)
 
-tagger :: String -> IO ()
-tagger = tagWriter . fileInfo
+tagger :: FilePath -> IO ()
+tagger fileName = reader >>= modifier >>= writer
+  where reader = S.readTag fileName
+        modifier = return . (modifyTag fileName)
+        writer = tagWriter fileName
+
+modifyTag :: FilePath -> Maybe S.Tag -> S.Tag
+modifyTag fileName tag =
+  S.setTrack (trackNum info) $ S.setTitle (title info) (safeTag tag)
+    where safeTag (Just t) = t
+          safeTag Nothing  = I.emptyID3Tag
+          info = fileInfo fileName
 
 fileInfo :: String -> FileInfo
 fileInfo x = FileInfo { fileName = x, trackNum = y, title = z }
   where (y, rest) = splitFileName " - " x
         (z, _) = splitFileName "." rest
 
-tagWriter :: FileInfo -> IO ()
-tagWriter info = do
-  putStrLn $ "writing tags for: " ++ (fileName info)
-  S.writeTag (fileName info) (tagMaker info)
-
-tagMaker :: FileInfo -> I.ID3Tag
-tagMaker info = S.setTrack (trackNum info) $ S.setTitle (title info) I.emptyID3Tag
+tagWriter :: FilePath -> S.Tag -> IO ()
+tagWriter fileName tag = do
+  putStrLn $ "writing tags for: " ++ fileName
+  S.writeTag fileName tag
 
 splitFileName :: String -> String -> (String, String)
 splitFileName delim str
