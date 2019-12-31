@@ -6,7 +6,6 @@ import System.Exit
 import qualified Data.Text as T
 import qualified ID3 as I
 import qualified ID3.Simple as S
-import qualified System.Process as P
 
 data FileInfo = FileInfo { fileName :: String
                          , trackNum :: String
