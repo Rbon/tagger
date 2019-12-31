@@ -13,18 +13,21 @@ data FileInfo = FileInfo { fileName :: String
                          , title :: String
                          } deriving (Show)
 
+tagger = tagWriter . fileInfo
+
 fileInfo :: String -> FileInfo
 fileInfo x = FileInfo { fileName = x, trackNum = y, title = z }
   where (y, rest) = splitFileName " - " x
         (z, _) = splitFileName "." rest
 
-tagger = tagWriter . fileInfo
+tagInfo :: String -> FileInfo
+tagInfo x = FileInfo { fileName = x, trackNum = y, title = z }
+  where (y, rest) = splitFileName " - " x
+        (z, _) = splitFileName "." rest
 
-writer x = do
-  trackNumWriter (trackNum x) (fileName x)
-  titleWriter (title x) (fileName x)
-
-tagWriter info = S.writeTag (fileName info) (tagMaker info)
+tagWriter info = do
+  putStrLn $ "writing tags for: " ++ (fileName info)
+  S.writeTag (fileName info) (tagMaker info)
 
 tagMaker :: FileInfo -> I.ID3Tag
 tagMaker info = S.setTrack (trackNum info) $ S.setTitle (title info) I.emptyID3Tag
@@ -37,14 +40,3 @@ splitFileName delim str
   | length split == 1 = ("", concat split)
   | otherwise         = (split !! 0, split !! 1)
     where split = map T.unpack $ T.splitOn (T.pack delim) (T.pack str)
-
-id3v2Tagger :: String -> String -> String -> IO ExitCode
-id3v2Tagger frame content fileName =
-  P.system $ "id3v2 "++frame++" '"++content++"' "++"'"++fileName++"'"
-
-trackNumWriter :: String -> String -> IO ExitCode
-trackNumWriter = id3v2Tagger "-T"
-
-titleWriter :: String -> String -> IO ExitCode
-titleWriter = id3v2Tagger "-t"
-
