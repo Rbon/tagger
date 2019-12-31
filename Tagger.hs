@@ -13,6 +13,7 @@ data FileInfo = FileInfo { fileName :: String
                          , title :: String
                          } deriving (Show)
 
+tagger :: String -> IO ()
 tagger = tagWriter . fileInfo
 
 fileInfo :: String -> FileInfo
@@ -20,20 +21,13 @@ fileInfo x = FileInfo { fileName = x, trackNum = y, title = z }
   where (y, rest) = splitFileName " - " x
         (z, _) = splitFileName "." rest
 
-tagInfo :: String -> FileInfo
-tagInfo x = FileInfo { fileName = x, trackNum = y, title = z }
-  where (y, rest) = splitFileName " - " x
-        (z, _) = splitFileName "." rest
-
+tagWriter :: FileInfo -> IO ()
 tagWriter info = do
   putStrLn $ "writing tags for: " ++ (fileName info)
   S.writeTag (fileName info) (tagMaker info)
 
 tagMaker :: FileInfo -> I.ID3Tag
 tagMaker info = S.setTrack (trackNum info) $ S.setTitle (title info) I.emptyID3Tag
-
-usage = "Usage: tagger [-h] [file ..]"
-exit  = exitWith ExitSuccess
 
 splitFileName :: String -> String -> (String, String)
 splitFileName delim str
