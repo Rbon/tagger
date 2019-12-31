@@ -25,7 +25,7 @@ modifyTag fileName tag =
           safeTag Nothing  = I.emptyID3Tag
           info = fileInfo fileName
 
-fileInfo :: String -> FileInfo
+fileInfo :: FilePath -> FileInfo
 fileInfo x = FileInfo { fileName = x, trackNum = y, title = z }
   where (y, rest) = splitFileName " - " x
         (z, _) = splitFileName "." rest
