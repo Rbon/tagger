@@ -14,7 +14,7 @@ data FileInfo = FileInfo { fileName :: String
 tagger :: FilePath -> IO ()
 tagger fileName = reader >>= modifier >>= writer
   where reader = S.readTag fileName
-        modifier = return . (modifyTag fileName)
+        modifier = return . modifyTag fileName
         writer = tagWriter fileName
 
 modifyTag :: FilePath -> Maybe S.Tag -> S.Tag
@@ -35,7 +35,9 @@ tagWriter fileName tag = do
   S.writeTag fileName tag
 
 splitFileName :: String -> String -> (String, String)
-splitFileName delim str
-  | length split == 1 = ("", concat split)
-  | otherwise         = (split !! 0, split !! 1)
-    where split = map T.unpack $ T.splitOn (T.pack delim) (T.pack str)
+splitFileName delim str = format split
+  where split = map T.unpack $ T.splitOn (T.pack delim) (T.pack str)
+        format [y]    = ("", y)
+        format [x, y] = (x, y)
+
+
