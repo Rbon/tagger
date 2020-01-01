@@ -9,7 +9,7 @@ import qualified ID3.Simple as S
 data FileInfo = FileInfo { fileName :: String
                          , trackNum :: String
                          , title :: String
-                         } deriving (Show)
+                         } deriving (Show, Eq)
 
 tagger :: FilePath -> IO ()
 tagger fileName = reader >>= modifier >>= writer
@@ -39,5 +39,6 @@ splitFileName delim str = format split
   where split = map T.unpack $ T.splitOn (T.pack delim) (T.pack str)
         format [y]    = ("", y)
         format [x, y] = (x, y)
+        format _      = ("", "")
 
 
