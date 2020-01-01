@@ -40,5 +40,3 @@ splitFileName delim str = format split
         format [y]    = ("", y)
         format [x, y] = (x, y)
         format _      = ("", "")
-
-
